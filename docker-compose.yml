@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: postgres:10.1
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./db/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+  redis:
+    restart: always
+    image: redis:latest
+    expose:
+      - "6379"
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./test_blog:/test_blog
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - celery
+  celery:
+    build: .
+    command: celery worker -A test_blog --loglevel=debug --concurrency=4
+    volumes:
+      - ./test_blog:/test_blog
+
+volumes:
+ postgres_data:
+ db:
