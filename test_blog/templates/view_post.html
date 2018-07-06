@@ -25,7 +25,38 @@
     </li>
   </ul>
 
-    <a href="{% url 'blog:editPost' pk=post.id %}">Редактировать</a>
+    {%if post.user.id == user.id%}
+      <a href="{% url 'blog:editPost' pk=post.id %}">Редактировать</a>
+      <a href="{% url 'blog:deletePost' pk=post.id %}">Удалить</a>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+      <form action="{% url 'blog:create_comment' pk=post.id %}" enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          {{form.media}}
+          {{form.as_p}}
+          <input type="submit" value="Submit" />
+      </form>
+    {% endif %}
+
+    {% if comments %}
+      {% for comment in comments %}
+        <p>{{comment.text}}</p>
+        <a href='#'>{{comment.user.username}}</a>
+        <ul>
+        <li data-id="{{ comment.id }}" data-type="comment" data-action="like" title="Нравится">
+            Нравится
+            <span data-count="like">{{ post.votes.likes.count }}</span>
+        </li>
+        <li data-id="{{ comment.id }}" data-type="comment" data-action="dislike" title="Не нравится">
+            Не нравится
+            <span data-count="dislike">{{ post.votes.dislikes.count }}</span>
+        </li>
+      </ul>
+        
+      {% endfor %}
+    {% endif %}
+
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

@@ -43,3 +43,7 @@ class PostEditForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class CreateComment(forms.Form):
+    text = forms.CharField(widget=forms.Textarea, label='Написать комментарий')

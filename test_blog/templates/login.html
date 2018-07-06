@@ -18,12 +18,12 @@
       </ul>
   {% endif %}
 
-  
+
   <form action="" method = "post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit">
   </form>
-  <a href = "/register">Регистрация</a>
+  <a href = "{% url 'blog:register' %}">Регистрация</a>
 </body>
 </html>

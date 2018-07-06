@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (Index, LoginAuth, Register, Verify, CreatePost, ViewPost,
-                    LogOutView, VotesView, EditPost)
+                    LogOutView, VotesView, EditPost, DeletePost, CreateComments)
 from django.contrib.auth.decorators import login_required
-from .models import Post, LikeDislike
+from .models import Post, LikeDislike, Comment
 
 app_name = "blog"
 
@@ -16,6 +16,10 @@ urlpatterns = [
     path('logout/', LogOutView.as_view(), name="logout"),
     path('post/<int:pk>/like/', login_required(VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE))),
     path('post/<int:pk>/dislike/', login_required(VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE))),
+    path('comment/<int:pk>/like/', login_required(VotesView.as_view(model=Comment, vote_type=LikeDislike.LIKE))),
+    path('comment/<int:pk>/dislike/', login_required(VotesView.as_view(model=Comment, vote_type=LikeDislike.DISLIKE))),
     path('post/<int:pk>/edit', EditPost.as_view(), name="editPost"),
+    path('post/<int:pk>/delete', DeletePost.as_view(), name="deletePost"),
+    path('post/<int:pk>/create_comment', CreateComments.as_view(), name="create_comment"),
 
 ]

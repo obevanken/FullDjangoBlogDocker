@@ -48,11 +48,23 @@ class Post(models.Model):
                              max_length=64)
     text = RichTextUploadingField(verbose_name="Текст", null=True)
     views = models.IntegerField(verbose_name='Просмотры', default=0)
-    user = models.ForeignKey(User, related_name='Post', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(verbose_name='Картинка', upload_to='img/', null=True, blank=True)
-    votes = GenericRelation(LikeDislike, related_query_name='articles')
+    votes = GenericRelation(LikeDislike, related_query_name='articles', verbose_name="Голоса")
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    text = models.CharField(verbose_name='Текст', max_length=300, null=False)
+    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    votes = GenericRelation(LikeDislike, related_query_name='comment', verbose_name="Голоса")
+
+    def __str__(self):
+        return "User: {0}, Post: {1}".format(self.user.username, self.post.title)
