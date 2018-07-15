@@ -7,7 +7,6 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./db/init.sql:/docker-entrypoint-initdb.d/1-init.sql
   redis:
     restart: always
     image: redis:latest

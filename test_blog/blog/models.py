@@ -7,6 +7,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.auth.models import AbstractUser
 from .managers import LikeDislikeManager
 from ckeditor_uploader.fields import RichTextUploadingField
+from mptt.models import MPTTModel, TreeForeignKey
 import uuid
 
 
@@ -58,13 +59,14 @@ class Post(models.Model):
         return self.title
 
 
-class Comment(models.Model):
+class Comment(MPTTModel):
     text = models.CharField(verbose_name='Текст', max_length=300, null=False)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     votes = GenericRelation(LikeDislike, related_query_name='comment', verbose_name="Голоса")
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return "User: {0}, Post: {1}".format(self.user.username, self.post.title)

@@ -13,7 +13,7 @@ def send_verification_email(user_id):
         link = 'http://localhost:8000'
         send_mail(
             "Поддтверждение аккаунта",
-            "Здравствуйте " + user.username + " для подтверждения аккакунта переходите по ссылке " + link + reverse('verify', kwargs={'uuid': str(user.verification_uuid)}),
+            "Здравствуйте " + user.username + " для подтверждения аккакунта переходите по ссылке " + link + "/verify/" + str(user.verification_uuid) + "/",
             "От Андрея",
             [user.email],
             fail_silently=False,

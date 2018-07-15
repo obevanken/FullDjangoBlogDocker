@@ -26,13 +26,14 @@ SECRET_KEY = '=k9of#el@l#yvjgnqx9c+c+rukd6e#1rh=_cwdzj1zt0p1*36x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.37', 'localhost']
 
 # Application definition
 
 INSTALLED_APPS = [
     'blog',
     'ckeditor',
+    'mptt',
     'ckeditor_uploader',
     'django.contrib.admin',
     'django.contrib.auth',

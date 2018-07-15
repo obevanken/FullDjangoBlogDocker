@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import User, Post
+from .models import User, Post, Comment
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -40,6 +40,12 @@ class PostEditForm(forms.ModelForm):
         fields = ['title', 'text', 'image']
 
 
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['last_name', 'first_name', 'avatar']
+
+
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -47,3 +53,9 @@ class LoginForm(forms.Form):
 
 class CreateComment(forms.Form):
     text = forms.CharField(widget=forms.Textarea, label='Написать комментарий')
+
+
+class EditFormComment(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

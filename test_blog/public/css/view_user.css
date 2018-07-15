@@ -10,31 +10,25 @@
   width: 100%;
 }
 
-.test{
-  padding-left: 0px
-}
-
 .avatar{
   height:50px;
   width:50px;
   border-radius: 50px;
 }
 
-.post{
+
+.about_user{
   margin-top:30px;
 }
 
-.title{
-  background-size: cover;
-  background-repeat: no-repeat;
-  height:100%;
-  width: 100%;
+.img{
+  margin-left: 50%;
+  border: 2px solid silver;
+  height:500px;
+  width: 500px;
+  position: absolute;
 }
 
-.title h3{
-  text-align: center;
-}
-
-.post h3{
-  text-align: center;
+.post_user{
+  margin-top: 40%;
 }

@@ -10,31 +10,12 @@
   width: 100%;
 }
 
-.test{
-  padding-left: 0px
-}
-
 .avatar{
   height:50px;
   width:50px;
   border-radius: 50px;
 }
 
-.post{
-  margin-top:30px;
-}
-
-.title{
-  background-size: cover;
-  background-repeat: no-repeat;
-  height:100%;
-  width: 100%;
-}
-
-.title h3{
-  text-align: center;
-}
-
-.post h3{
-  text-align: center;
+form{
+  margin-top: 30px;
 }

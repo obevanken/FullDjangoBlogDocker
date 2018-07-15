@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from ..models import User
+from django.urls import reverse
 from django.contrib.auth import authenticate
 from ..forms import RegistationForm
 from django.contrib import messages
@@ -22,4 +23,4 @@ class Register(FormView):
                                             data['password'])
             user.save()
             print(user)
-            return redirect('/')
+            return reverse('blog:login')

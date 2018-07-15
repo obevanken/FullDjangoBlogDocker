@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+
+
+.logo{
+  font-family: 'Kaushan Script', sans-serif;
+  font-size: 25px;
+  text-align: center;
+}
+
+.row{
+  width: 100%;
+}
+
+.log{
+  text-align: center;
+  margin-top: 10%;
+}
+
+a{
+  text-decoration: none;
+}

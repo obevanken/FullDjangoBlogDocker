@@ -23,22 +23,22 @@
               {{user.username}}
             </a>
               <div class="dropdown-menu" aria-labelledby="dropdownForUser">
+                <a class="dropdown-item" href="{% url 'blog:view_user' uuid=user.verification_uuid %}">Профиль</a>
                 <a class="dropdown-item" href="{% url 'blog:create_post' %}">Создать пост</a>
                 <a class="dropdown-item" href="{% url 'blog:logout' %}">Выход</a>
               </div>
             </div>
           </div>
-          <div class="col-md-1">
-            <a class="navbar-brand logo" href="#">Blog</a>
+          <div class="col-md-1 ml-auto">
+            <a class="navbar-brand logo" href="{% url 'blog:index' %}">Blog</a>
           </div>
           </div>
-
         </div>
         {% else %}
-        <a class="navbar-brand logo" href="#">Blog</a>
+        <a class="navbar-brand logo" href="{% url 'blog:index' %}">Blog</a>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'blog:register' %}/">Регистрация</a>
+              <a class="nav-link" href="{% url 'blog:register' %}">Регистрация</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'blog:login' %}">Вход</a>
@@ -46,6 +46,10 @@
           </ul>
     {% endif %}
   </nav>
+
+      {% if user.is_active is not True and user.is_authenticated %}
+      <span>Подтвердите аккаунт на почте</span>
+      {% endif %}
 
         {% for post in posts %}
         <div class="container post">
@@ -64,7 +68,7 @@
             <div class="col"><h3><h4>{{post.text|safe}}</h4></h3></div>
           </div>
 
-          <a href="#">Автор: {{post.user.username}}</a>
+          <span>Автор: <a href="{% url 'blog:view_user' uuid=post.user.verification_uuid %}">{{post.user.username}}</a></span>
           <a href="{% url 'blog:view_post' pk=post.id %}">Подробнее</a>
         </div>
         {%endfor%}

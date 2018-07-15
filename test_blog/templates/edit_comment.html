@@ -48,24 +48,22 @@
     {% endif %}
   </nav>
 
-  <a href="{% url 'blog:index' %}">На главную</a>
-
     <div class="post">
-      <h3>{{post.title}}</h3>
-    <p>{{post.text|safe}}</p>
-    {%if post.image%}
+      <h3>{{comment.post.title}}</h3>
+    <p>{{comment.post.text|safe}}</p>
+    {%if comment.post.image%}
       <img src="{{ post.image.url }}" alt="">
     {%endif%}
-    <a href="{% url 'blog:view_user' uuid=post.user.verification_uuid %}">{{post.user.username}}</a>
+    <a href="{% url 'blog:view_user' uuid=comment.post.user.verification_uuid %}">{{post.user.username}}</a>
     <p>{{post.views}}</p>
     </div>
     <ul class = "likes">
     <li data-id="{{ post.id }}" data-type="post" data-action="like" title="Нравится">
-        <span id="count" data-count="like">{{ post.votes.likes.count }}</span>
+        <span id="count" data-count="like">{{ comment.post.votes.likes.count }}</span>
         <i class="material-icons">thumb_up</i>
     </li>
     <li data-id="{{ post.id }}" data-type="post" data-action="dislike" title="Не нравится">
-        <span data-count="dislike">{{ post.votes.dislikes.count }}</span>
+        <span data-count="dislike">{{ comment.post.votes.dislikes.count }}</span>
         <i class="material-icons">thumb_down</i>
     </li>
   </ul>
@@ -76,7 +74,7 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-      <form action="{% url 'blog:create_comment' pk=post.id %}" enctype="multipart/form-data" method="post">
+      <form enctype="multipart/form-data" method="post">
           {% csrf_token %}
           {{form.media}}
           {{form.as_p}}
@@ -85,49 +83,28 @@
     {% endif %}
 
     {% if comments %}
-      {% load mptt_tags %}
-      <ul>
-        {% recursetree comments %}
-            <li>
-              <div class="comment">
-                Автор: <a href='{% url 'blog:view_user' uuid=node.user.verification_uuid %}'>{{node.user.username}}</a>
-                <p>{{node.text}}</p>
-                {% if node.user.username == user.username %}
-                 <a href="{% url 'blog:delete_comment' pk=node.id %}">Удалить</a>
-                 <a href="{% url 'blog:edit_comment' pk=node.id %}">Редактировать</a>
-                {% endif %}
-                <a class="btn btn-primary" data-toggle="collapse" href="#{{node.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  Ответить
-                </a>
-                <div class="collapse" id="{{node.id}}">
-                  <div class="card card-body">
-                    <form action="{% url 'blog:create_answere' pk=node.id %}" enctype="multipart/form-data" method="post">
-                        {% csrf_token %}
-                        {{form.media}}
-                        {{form.as_p}}
-                        <input type="submit" value="Написать" />
-                    </form>
-                  </div>
-                </div>
-                <ul class="likes">
-                <li data-id="{{ node.id }}" data-type="comment" data-action="like" title="Нравится">
-                    <span data-count="like">{{ node.votes.likes.count }}</span>
-                    <i class="material-icons">thumb_up</i>
-                </li>
-                <li data-id="{{ node.id }}" data-type="comment" data-action="dislike" title="Не нравится">
-                    <span data-count="dislike">{{ node.votes.dislikes.count }}</span>
-                    <i class="material-icons">thumb_down</i>
-                </li>
-              </ul>
-              </div>
-              {% if not node.is_leaf_node %}
-                    <ul class="children">
-                      {{ children }}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endrecursetree %}
+      {% for comment in comments %}
+      <div class="comment">
+        Автор: <a href='{% url 'blog:view_user' uuid=comment.user.verification_uuid %}'>{{comment.user.username}}</a>
+        <p>{{comment.text}}</p>
+        {% if comment.user.username == user.username %}
+         <a href="{% url 'blog:delete_comment' pk=comment.id %}">Удалить</a>
+         <a href="{% url 'blog:edit_comment' pk=comment.id %}">Редактировать</a>
+        {% endif %}
+        <ul class="likes">
+        <li data-id="{{ comment.id }}" data-type="comment" data-action="like" title="Нравится">
+            <span data-count="like">{{ post.votes.likes.count }}</span>
+            <i class="material-icons">thumb_up</i>
+        </li>
+        <li data-id="{{ comment.id }}" data-type="comment" data-action="dislike" title="Не нравится">
+            <span data-count="dislike">{{ post.votes.dislikes.count }}</span>
+            <i class="material-icons">thumb_down</i>
+        </li>
       </ul>
+      </div>
+
+
+      {% endfor %}
     {% endif %}
 
 
