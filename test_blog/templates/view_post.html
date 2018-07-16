@@ -62,11 +62,11 @@
     <ul class = "likes">
     <li data-id="{{ post.id }}" data-type="post" data-action="like" title="Нравится">
         <span id="count" data-count="like">{{ post.votes.likes.count }}</span>
-        <i class="material-icons">thumb_up</i>
+        <i class="material-icons" style="cursor:pointer">thumb_up</i>
     </li>
     <li data-id="{{ post.id }}" data-type="post" data-action="dislike" title="Не нравится">
         <span data-count="dislike">{{ post.votes.dislikes.count }}</span>
-        <i class="material-icons">thumb_down</i>
+        <i class="material-icons" style="cursor:pointer">thumb_down</i>
     </li>
   </ul>
 
@@ -90,7 +90,10 @@
         {% recursetree comments %}
             <li>
               <div class="comment">
-                Автор: <a href='{% url 'blog:view_user' uuid=node.user.verification_uuid %}'>{{node.user.username}}</a>
+                {% if node.user.avatar %}
+                  <img class="avatar" src="{{ node.user.avatar.url }}" alt="">
+                {% endif %}
+                <a href='{% url 'blog:view_user' uuid=node.user.verification_uuid %}'>{{node.user.username}}</a>
                 <p>{{node.text}}</p>
                 {% if node.user.username == user.username %}
                  <a href="{% url 'blog:delete_comment' pk=node.id %}">Удалить</a>
@@ -112,11 +115,11 @@
                 <ul class="likes">
                 <li data-id="{{ node.id }}" data-type="comment" data-action="like" title="Нравится">
                     <span data-count="like">{{ node.votes.likes.count }}</span>
-                    <i class="material-icons">thumb_up</i>
+                    <i class="material-icons" style="cursor:pointer">thumb_up</i>
                 </li>
                 <li data-id="{{ node.id }}" data-type="comment" data-action="dislike" title="Не нравится">
                     <span data-count="dislike">{{ node.votes.dislikes.count }}</span>
-                    <i class="material-icons">thumb_down</i>
+                    <i class="material-icons" style="cursor:pointer">thumb_down</i>
                 </li>
               </ul>
               </div>

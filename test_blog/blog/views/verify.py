@@ -15,4 +15,4 @@ class Verify(View):
         user.is_active = True
         user.save()
         print('Работаааааееет')
-        return redirect('/')
+        return redirect('blog:login')

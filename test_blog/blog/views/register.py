@@ -23,4 +23,4 @@ class Register(FormView):
                                             data['password'])
             user.save()
             print(user)
-            return reverse('blog:login')
+            return redirect('blog:login')

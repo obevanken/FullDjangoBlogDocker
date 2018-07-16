@@ -10,7 +10,7 @@ def send_verification_email(user_id):
     UserModel = get_user_model()
     try:
         user = UserModel.objects.get(pk=user_id)
-        link = 'http://localhost:8000'
+        link = 'http://3a664438.ngrok.io'
         send_mail(
             "Поддтверждение аккаунта",
             "Здравствуйте " + user.username + " для подтверждения аккакунта переходите по ссылке " + link + "/verify/" + str(user.verification_uuid) + "/",

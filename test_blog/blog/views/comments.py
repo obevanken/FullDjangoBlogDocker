@@ -21,7 +21,9 @@ class CreateComments(View):
 class DeleteComment(DeleteView):
     model = Comment
     template_name = "comment_confirm_delete.html"
-    success_url = reverse_lazy('blog:index')
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse('blog:view_post', kwargs={'pk': self.object.post.pk})
 
 
 class EditComment(UpdateView):
