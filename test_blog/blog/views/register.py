@@ -18,7 +18,7 @@ class Register(FormView):
 
         if result is None:
             print("зашел")
-            messages.info(self.request, ' ПОДДТВЕРДИСЬ НА ПОЧТЕ ')
+            messages.info(self.request, ' Подтвердитесь на почте')
             user = User.objects.create_user(data['username'], data['email'],
                                             data['password'])
             user.save()

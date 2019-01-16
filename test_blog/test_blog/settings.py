@@ -26,11 +26,12 @@ SECRET_KEY = '=k9of#el@l#yvjgnqx9c+c+rukd6e#1rh=_cwdzj1zt0p1*36x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.37', 'localhost','3a664438.ngrok.io']
+ALLOWED_HOSTS = ['192.168.1.37', 'localhost', '94819e74.ngrok.io']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'blog',
     'ckeditor',
     'mptt',
@@ -72,7 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'test_blog.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -150,6 +150,17 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'blog.User'
+
+ASGI_APPLICATION = 'test_blog.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(REDIS_HOST, 6379)],
+        },
+    },
+}
 
 # CKEDITOR_CONFIGS = {
 #     'default': {

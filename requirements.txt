@@ -8,3 +8,6 @@ celery[librabbitmq,redis,auth,msgpack]
 django-ckeditor
 django-ckeditor-widget
 django-mptt
+channels
+channels_redis
+

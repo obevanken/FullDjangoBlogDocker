@@ -2,7 +2,6 @@ import logging
 from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from test_blog.celery import app
-from django.urls import reverse
 
 
 @app.task
@@ -20,3 +19,12 @@ def send_verification_email(user_id):
         )
     except UserModel.DoesNotExist:
         logging.warning("Tried to send verification email to non-existing user'%s'" % user_id)
+
+
+@app.task
+def create_message(user_id, room_name, message):
+        from .models import Message, User, Room
+        user = User.objects.get(pk=user_id)
+        room = Room.objects.filter(title=room_name).first()
+        result = Message.objects.create(text=message, user=user, room=room)
+        result.save()

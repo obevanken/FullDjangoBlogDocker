@@ -7,3 +7,4 @@ from .logout import LogOutView
 from .likeDislike import VotesView
 from .comments import CreateComments, DeleteComment, EditComment, CreateAnswere
 from .user import ViewUser, EditUser, DeleteUser
+from .chat import ChatView, MyChat

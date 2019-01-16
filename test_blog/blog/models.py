@@ -70,3 +70,15 @@ class Comment(MPTTModel):
 
     def __str__(self):
         return "User: {0}, Post: {1}".format(self.user.username, self.post.title)
+
+
+class Room(models.Model):
+    user = models.ManyToManyField(User, related_name='rooms')
+    title = models.CharField(verbose_name="Комната", max_length=30)
+
+
+class Message(models.Model):
+    text = models.CharField(verbose_name='Сообщение', max_length=3000)
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, related_name="messages", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

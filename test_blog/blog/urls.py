@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (Index, LoginAuth, Register, Verify, CreatePost, ViewPost,
                     LogOutView, VotesView, EditPost, DeletePost, CreateComments,
                     DeleteComment, ViewUser, EditUser, DeleteUser, EditComment,
-                    CreateAnswere)
+                    CreateAnswere, ChatView, MyChat)
 from django.contrib.auth.decorators import login_required
 from .models import Post, LikeDislike, Comment
 
@@ -29,5 +29,7 @@ urlpatterns = [
     path('user/<int:pk>/delete', DeleteUser.as_view(), name="delete_user"),
     path('comment/<int:pk>/edit', EditComment.as_view(), name="edit_comment"),
     path('answere/<int:pk>/create', CreateAnswere.as_view(), name="create_answere"),
+    path('chat/<room_name>/', login_required(ChatView.as_view()), name="chat_view"),
+    path('my_chat/<int:pk>/', login_required(MyChat.as_view()), name="my_chat")
 
 ]

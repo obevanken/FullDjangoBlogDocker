@@ -36,6 +36,7 @@
           </div>
         </div>
         {% else %}
+        <div class="container-fluid">
         <a class="navbar-brand logo" href="{% url 'blog:index' %}">Blog</a>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -45,6 +46,7 @@
               <a class="nav-link" href="{% url 'blog:login' %}">Вход</a>
             </li>
           </ul>
+        </div>
     {% endif %}
   </nav>
 

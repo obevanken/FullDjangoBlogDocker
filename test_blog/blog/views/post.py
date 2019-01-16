@@ -31,12 +31,12 @@ class ViewPost(View):
 
         post.views += 1
         post.save()
-
-        return render(request, self.template_name, {
-                                                    'post': post,
-                                                    'form': form,
-                                                    'comments': comments
-                                                    })
+        context = {
+            'post': post,
+            'form': form,
+            'comments': comments
+        }
+        return render(request, self.template_name, context)
 
 
 class EditPost(PermissonForPostActionMixin, UpdateView):

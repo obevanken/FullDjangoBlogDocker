@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Post, LikeDislike, Comment
+from .models import User, Post, LikeDislike, Comment, Message, Room
 
 
 class CommentInline(admin.TabularInline):
@@ -20,3 +20,5 @@ admin.site.register(User)
 admin.site.register(Post, PostAdmin)
 admin.site.register(LikeDislike)
 admin.site.register(Comment)
+admin.site.register(Message)
+admin.site.register(Room)
